@@ -12,9 +12,11 @@ $nav = $nav ?? null;
 $showPrivateNav = !auth_enabled() || $user !== null;
 $flashes = isset($_SESSION) ? take_flashes() : [];
 
-$navLink = function (string $key, string $href, string $label) use ($nav): string {
-    $current = $nav === $key ? ' aria-current="page"' : '';
-    return '<a href="' . e($href) . '"' . $current . '>' . e($label) . '</a>';
+$navLink = function (string $key, string $href, string $label) use (
+    $nav,
+): string {
+    $current = $nav === $key ? ' aria-current="page"' : "";
+    return '<a href="' . e($href) . '"' . $current . ">" . e($label) . "</a>";
 };
 ?>
 <!doctype html>
@@ -33,27 +35,27 @@ $navLink = function (string $key, string $href, string $label) use ($nav): strin
 <header class="site-header">
   <div class="container">
     <a class="logo" href="/">
-      <?= icon('hourglass') ?>
+      <?= icon("hourglass") ?>
       TimeCapsule
     </a>
     <nav class="nav" aria-label="Main">
 <?php if ($showPrivateNav): ?>
-      <?= $navLink('home', '/', 'My capsules') ?>
+      <?= $navLink("home", "/", "My capsules") ?>
 <?php endif; ?>
-      <?= $navLink('wall', '/wall', 'Public wall') ?>
+      <?= $navLink("wall", "/wall", "Public wall") ?>
 <?php if ($showPrivateNav): ?>
-      <?= $navLink('notifications', '/notifications', 'Notifications') ?>
+      <?= $navLink("notifications", "/notifications", "Notifications") ?>
 <?php endif; ?>
     </nav>
     <div class="user-box">
 <?php if (!auth_enabled()): ?>
       <span>Guest</span>
 <?php elseif ($user !== null): ?>
-      <span><?= e($user['email']) ?></span>
+      <span><?= e($user["email"]) ?></span>
       <form method="post" action="/logout">
         <?= csrf_field() ?>
         <button type="submit" class="btn-link">
-          <?= icon('log-out') ?>
+          <?= icon("log-out") ?>
           Log out
         </button>
       </form>
@@ -68,10 +70,14 @@ $navLink = function (string $key, string $href, string $label) use ($nav): strin
 <main>
   <div class="container">
 <?php foreach ($flashes as $flash): ?>
-<?php if ($flash['type'] === 'error'): ?>
-    <div class="flash flash-error" role="alert"><?= e($flash['message']) ?></div>
+<?php if ($flash["type"] === "error"): ?>
+    <div class="flash flash-error" role="alert"><?= e(
+        $flash["message"],
+    ) ?></div>
 <?php else: ?>
-    <div class="flash flash-success" role="status"><?= e($flash['message']) ?></div>
+    <div class="flash flash-success" role="status"><?= e(
+        $flash["message"],
+    ) ?></div>
 <?php endif; ?>
 <?php endforeach; ?>
 
@@ -81,9 +87,16 @@ $navLink = function (string $key, string $href, string $label) use ($nav): strin
 
 <footer class="site-footer">
   <div class="container">
-    <?php /* Shows which machine answered, which database host it uses and where files are stored. */ ?>
-    Served by <code><?= e(gethostname()) ?></code> · DB: <code><?= e(config('DB_HOST', 'localhost')) ?></code> · Files: <code>local disk (<?= e(config('UPLOAD_DIR', 'storage/uploads')) ?>)</code>
+    <?php
+/* Shows which machine answered, which database host it uses and where files are stored. */
+?>
+    Served by <code><?= e(gethostname()) ?></code> · DB: <code><?= e(
+    config("DB_HOST", "localhost"),
+) ?></code> · Files: <code>local disk (<?= e(
+    config("UPLOAD_DIR", "storage/uploads"),
+) ?>)</code>
     made by RisovoePole
+    <p>SMALL CHANGE  - MADE IN LR3</p>
   </div>
 </footer>
 
