@@ -92,8 +92,8 @@ $navLink = function (string $key, string $href, string $label) use (
 ?>
     Served by <code><?= e(gethostname()) ?></code> · DB: <code><?= e(
     config("DB_HOST", "localhost"),
-) ?></code> · Files: <code>local disk (<?= e(
-    config("UPLOAD_DIR", "storage/uploads"),
+) ?></code> · Files: <code>S3 (<?= htmlspecialchars(
+    (string) config("S3_BUCKET", "not set"),
 ) ?>)</code>
     made by RisovoePole
     <p>SMALL CHANGE  - MADE IN LR3</p>
